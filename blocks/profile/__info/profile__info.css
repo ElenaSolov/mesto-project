@@ -1,5 +1,5 @@
 .profile__info {
-  margin-top: 26px;
+  margin-top: 22px;
   width: fit-content;
   display: grid;
   align-items: center;
@@ -16,6 +16,7 @@
 
 @media screen and (max-width: 635px) {
   .profile__info{
+    margin-top: 26px;
     width: 100%;
     max-width: 282px;
     grid-template-columns: 1fr 0px;

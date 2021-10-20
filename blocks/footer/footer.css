@@ -1,10 +1,5 @@
 .footer {
   max-width: 880px;
-  width: 68.75%;
+  width: calc( 100% - 19px*2);
 }
 
-@media screen and (max-width: 767px) {
-  .footer {
-    width: calc( 100% - 19px*2);
-  }
-}
