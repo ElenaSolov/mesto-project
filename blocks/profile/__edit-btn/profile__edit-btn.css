@@ -13,6 +13,7 @@
   border: 1px solid #fff;
   vertical-align: middle;
   grid-area: profile__edit-btn;
+  transition: opacity .5s linear;
 }
 
 .profile__edit-btn:hover{
