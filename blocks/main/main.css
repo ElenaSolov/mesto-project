@@ -2,7 +2,7 @@
   box-sizing: border-box;
   max-width: 880px;
   padding: 40px 0 0;
-  min-height: 73vh;
+  min-height: 65vh;
 }
 
 @media screen and (max-width: 1023px) {
@@ -14,6 +14,6 @@
 
 @media screen and (max-width: 635px) {
   .main{
-    min-height: 83vh;
+    min-height: 76vh;
   }
 }
