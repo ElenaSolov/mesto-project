@@ -2,29 +2,23 @@ const page = document.querySelector('.page');
 const profile = page.querySelector('.profile');
 const cardsList = page.querySelector('.elements__list');
 
-const profileEditBtn = profile.querySelector('.profile__edit-btn');
 const popupEdit = page.querySelector('.pop-up_type_edit-profile');
 const profileEditForm = page.querySelector('.pop-up__form_place_edit');
-const popupEditCloseBtn = page.querySelector('.pop-up__close_place_edit');
 const userNameInput = page.querySelector('#heading');
 const userDescInput = page.querySelector('#subheading');
 const userName = profile.querySelector('.profile__name');
 const userTitle = profile.querySelector('.profile__subline');
 
-const profileAddBtn = profile.querySelector('.profile__add-btn');
 const profileAddForm = page.querySelector('.pop-up__form_place_add');
 const popupAdd = page.querySelector('.pop-up_type_add-card');
-const popupAddCloseBtn = page.querySelector('.pop-up__close_place_add');
 const newPlaceNameInput = page.querySelector('#place');
 const newPlaceLinkInput = page.querySelector('#url');
 const newCardTemplate = page.querySelector('#card-template').content;
 
 
 const popupImgView = page.querySelector('.pop-up_type_img');
-const popupImgViewCloseBtn = popupImgView.querySelector('.pop-up__close_place_img');
 const fullScreenImg = popupImgView.querySelector('.pop-up__img');
 const fullScreenImgCapture = popupImgView.querySelector('.pop-up__caption');
-
 
 let scrollY;
 
@@ -72,8 +66,6 @@ function createNewCard(name, link) {
 	cardImg.alt = name.toString();
 	cardImg.addEventListener('click', () => renderPicture(name, link));
 	newCard.querySelector('.element__text').textContent = name.toString();
-	newCard.querySelector('.element__like').addEventListener('click', evt => evt.target.classList.toggle('element__like_active'));
-	newCard.querySelector('.element__delete').addEventListener('click', deleteCardHandler);
 	return newCard;
 }
 
@@ -83,13 +75,8 @@ function renderCard(cardEl) {
 
 
 // EDIT PROFILE
-profileEditBtn.addEventListener('click', () => openPopup(popupEdit));
 
 profileEditForm.addEventListener('submit', editFormHandler)
-
-popupEditCloseBtn.addEventListener('click', () => {
-	closePopup(popupEdit);
-});
 
 function openPopup(el) {
 	el.classList.add('pop-up_opened');
@@ -114,14 +101,8 @@ function editProfile(name, title) {
 }
 
 // ADD NEW PLACE
-profileAddBtn.addEventListener('click', () => openPopup(popupAdd));
 
 profileAddForm.addEventListener('submit', addFormHandler);
-
-
-popupAddCloseBtn.addEventListener('click', () => {
-	closePopup(popupAdd);
-});
 
 function addFormHandler(evt) {
 	evt.preventDefault();
@@ -155,7 +136,7 @@ function unlockScrollY() {
 }
 
 
-// DELETE CARD
+// Delete card
 
 function deleteCardHandler(evt) {
 	const card = evt.target.closest('.element');
@@ -168,13 +149,34 @@ function deleteCardHandler(evt) {
 }
 
 // Image view
-popupImgViewCloseBtn.addEventListener('click', () => {
-	closePopup(popupImgView);
-})
 
 function renderPicture(name, link) {
 	openPopup(popupImgView);
 	fullScreenImg.src = link;
 	fullScreenImg.alt = name;
 	fullScreenImgCapture.textContent = name;
+}
+
+// Eventlistener
+
+window.addEventListener('click', windowClickHandler);
+
+function windowClickHandler (evt) {
+	if (evt.target.classList.contains('profile__edit-btn')) {
+		openPopup(popupEdit);
+	} else if (evt.target.classList.contains('profile__add-btn')) {
+		openPopup(popupAdd);
+	} else if (evt.target.classList.contains('pop-up__close_place_edit')) {
+		closePopup(popupEdit);
+	} else if (evt.target.classList.contains('pop-up__close_place_add')){
+		closePopup(popupAdd);
+	} else if (evt.target.classList.contains('pop-up__close_place_img')){
+		closePopup(popupImgView);
+	} else if (evt.target.classList.contains('pop-up_opened')) {
+		closePopup(evt.target);
+	} else if (evt.target.classList.contains('element__delete')) {
+		deleteCardHandler(evt);
+	} else if (evt.target.classList.contains('element__like')) {
+		evt.target.classList.toggle('element__like_active');
+	} 
 }
