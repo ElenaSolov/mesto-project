@@ -160,6 +160,7 @@ function renderPicture(name, link) {
 // Eventlistener
 
 window.addEventListener('click', windowClickHandler);
+window.addEventListener('keyup', keyPressHandler);
 
 function windowClickHandler (evt) {
 	if (evt.target.classList.contains('profile__edit-btn')) {
@@ -178,5 +179,13 @@ function windowClickHandler (evt) {
 		deleteCardHandler(evt);
 	} else if (evt.target.classList.contains('element__like')) {
 		evt.target.classList.toggle('element__like_active');
-	} 
+	}
 }
+
+function keyPressHandler (evt) {
+	if(evt.key==='Escape'){
+		const popUpEl = page.querySelector('.pop-up_opened');
+		if (popUpEl) closePopup(popUpEl);
+	}
+}
+
