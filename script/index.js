@@ -114,8 +114,7 @@ function addFormHandler(evt) {
 		initialCards.unshift(newPlace);
 		const newCardEl = createNewCard(newPlace.name, newPlace.link);
 		renderCard(newCardEl);
-		newPlaceNameInput.value = '';
-		newPlaceLinkInput.value = '';
+		profileAddForm.reset();
 	}
 	closePopup(popupAdd);
 }
@@ -188,4 +187,5 @@ function keyPressHandler (evt) {
 		if (popUpEl) closePopup(popUpEl);
 	}
 }
+
 
