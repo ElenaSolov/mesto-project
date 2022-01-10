@@ -86,6 +86,7 @@ function openPopup(el) {
 function closePopup(el) {
 	el.classList.remove('pop-up_opened');
 	unlockScrollY();
+
 }
 function editFormHandler(evt) {
 	evt.preventDefault();
@@ -188,4 +189,73 @@ function keyPressHandler (evt) {
 	}
 }
 
+ // Form validation
+enableValidation();
+function enableValidation () {
+	const formList = Array.from(document.querySelectorAll('.pop-up__form'))	;
+	formList.forEach(formElement => {
+		console.log(formElement)
+		formElement.addEventListener('submit', function (evt) {
+			evt.preventDefault();
+		});
+		setEventListeners(formElement);
+})
+}
 
+function setEventListeners (form) {
+	console.log(form)
+	const inputList = Array.from(form.querySelectorAll('.pop-up__input'));
+	console.log(inputList)
+	const submitBtn = form.querySelector('.pop-up__submit-btn');
+	console.log(submitBtn)
+	toggleBtnState(inputList, submitBtn);
+	inputList.forEach(input => {
+		input.addEventListener('input', ()=> {
+			checkInputValidity(form, input);
+			toggleBtnState(inputList, submitBtn);
+		})
+	})
+}
+function toggleBtnState (inputList, submitBtn) {
+	if(hasInvalidInput(inputList)) {
+		console.log(hasInvalidInput(inputList))
+		submitBtn.classList.add('pop-up__submit-btn_inactive');
+		submitBtn.setAttribute('disabled', '');
+		console.log(submitBtn)
+	} else {
+		submitBtn.classList.remove('pop-up__submit-btn_inactive');
+		submitBtn.removeAttribute('disabled');
+		console.log(inputList)
+	}
+}
+
+function checkInputValidity(form, input) {
+	if (!input.validity.valid) {
+		showInputError(form, input);
+		console.log(input)
+
+	} else {
+		hideInputError(form, input);
+	}
+}
+
+function showInputError(form, input) {
+	const errorElement = form.querySelector(`.pop-up__input-error_place_${input.id}`);
+	input.classList.add('pop-up__input_invalid');
+	if(input.value<2||input.value>40) {
+		errorElement.textContent = `Введите от 2 до ${input.pattern.slice(4, -1)} символов`;
+	}
+	if(input.type==='email') errorElement.textContent = 'Введите адрес сайта.';
+	errorElement.classList.add('pop-up__input-error_active');
+}
+
+function hideInputError(form, input) {
+	const errorElement = form.querySelector(`.pop-up__input-error_place_${input.id}`);
+	input.classList.remove('pop-up__input_invalid');
+	errorElement.classList.remove('pop-up__input-error_active');
+}
+
+function hasInvalidInput (inputList){
+	console.log(inputList[1].validity)
+	return inputList.some(input => !input.validity.valid);
+}
