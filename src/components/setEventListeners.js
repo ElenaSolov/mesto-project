@@ -1,5 +1,5 @@
 import {openPopup, closePopup} from './popupHandler.js';
-import {deleteCardHandler} from './cardHandler.js';
+import {deleteCardHandler} from './card.js';
 import {popupEdit, popupAdd, popupImgView, page} from './data.js';
 
 

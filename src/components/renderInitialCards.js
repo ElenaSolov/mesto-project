@@ -1,5 +1,5 @@
-import {createNewCard} from './cardHandler.js';
-import {renderCard} from './cardHandler.js';
+import {createNewCard} from './card.js';
+import {renderCard} from './card.js';
 
 export const initialCards = [
     {

@@ -1,7 +1,7 @@
 import {newPlaceNameInput, newPlaceLinkInput, profileAddForm, popupAdd} from './data.js';
-import {createNewCard} from './cardHandler.js';
+import {createNewCard} from './card.js';
 import {initialCards} from "./renderInitialCards.js";
-import {renderCard} from "./cardHandler.js";
+import {renderCard} from "./card.js";
 import {closePopup} from './popupHandler.js';
 
 export function addFormHandler(evt) {
