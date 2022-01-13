@@ -11,7 +11,7 @@ export function enableValidation () {
 function setEventListeners (form) {
     const inputList = Array.from(form.querySelectorAll('.pop-up__input'));
     const submitBtn = form.querySelector('.pop-up__submit-btn');
-    toggleBtnState(inputList, submitBtn);
+    // toggleBtnState(inputList, submitBtn);
     inputList.forEach(input => {
         input.addEventListener('input', ()=> {
             checkInputValidity(form, input);
@@ -31,20 +31,17 @@ function toggleBtnState (inputList, submitBtn) {
 
 function checkInputValidity(form, input) {
     if (!input.validity.valid) {
-        showInputError(form, input);
+        showInputError(form, input, input.validationMessage);
 
     } else {
         hideInputError(form, input);
     }
 }
 
-function showInputError(form, input) {
+function showInputError(form, input, errorMessage) {
     const errorElement = form.querySelector(`.pop-up__input-error_place_${input.id}`);
     input.classList.add('pop-up__input_invalid');
-    if(input.value<2||input.value>40) {
-        errorElement.textContent = `Введите от 2 до ${input.pattern.slice(4, -1)} символов`;
-    }
-    if(input.type==='email') errorElement.textContent = 'Введите адрес сайта.';
+   errorElement.textContent = errorMessage;
     errorElement.classList.add('pop-up__input-error_active');
 }
 

@@ -21,8 +21,3 @@ margin-top: 30px;
   font-family: 'Inter';
   }
 
-  @media screen and (max-width: 767px) {
-    .pop-up__input:last-of-type {
-      margin-bottom: 45px;
-    }
-  }

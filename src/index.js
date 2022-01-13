@@ -1,11 +1,12 @@
 import './styles/index.css';
 
-import {initialCards, renderInitialCards} from '../components/renderInitialCards.js';
-import {profileEditForm, profileAddForm} from '../components/data.js';
-import {editFormHandler} from '../components/editProfile.js';
-import {addFormHandler} from '../components/addNewPlace.js';
-import {windowClickHandler, keyPressHandler} from '../components/setEventListeners.js';
-import {enableValidation} from '../components/validate.js';
+import {initialCards} from "./components/data.js";
+import {renderInitialCards} from './components/renderInitialCards.js';
+import {profileEditForm, profileAddForm} from './components/data.js';
+import {editFormHandler} from './components/editProfile.js';
+import {addFormHandler} from './components/addNewPlace.js';
+import {windowClickHandler, keyPressHandler} from './components/setEventListeners.js';
+import {enableValidation} from './components/validate.js';
 
 // RENDER INITIAL CARDS
 renderInitialCards(initialCards);

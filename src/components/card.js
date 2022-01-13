@@ -1,5 +1,5 @@
 import {page, newCardTemplate} from './data.js';
-import {initialCards} from './renderInitialCards.js';
+import {initialCards} from './data.js';
 import {renderPicture} from './popupHandler.js'
 
 const cardsList = page.querySelector('.elements__list');
