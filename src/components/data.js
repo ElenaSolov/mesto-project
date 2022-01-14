@@ -19,6 +19,15 @@ export const popupImgView = page.querySelector('.pop-up_type_img');
 export const fullScreenImg = popupImgView.querySelector('.pop-up__img');
 export const fullScreenImgCapture = popupImgView.querySelector('.pop-up__caption');
 
+export const validationSettings = {
+    formSelector: '.pop-up__form',
+    inputSelector: '.pop-up__input',
+    submitBtnSelector: '.pop-up__submit-btn',
+    inactiveBtnClass: 'pop-up__submit-btn_inactive',
+    inputErrorClass: 'pop-up__input_invalid',
+    errorClass: 'pop-up__input-error_active'
+}
+
 export const initialCards = [
     {
         name: 'Архыз',

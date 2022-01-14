@@ -1,5 +1,7 @@
+import {validationSettings} from "./data.js";
+
 export function enableValidation () {
-    const formList = Array.from(document.querySelectorAll('.pop-up__form'))	;
+    const formList = Array.from(document.querySelectorAll(validationSettings.formSelector))	;
     formList.forEach(formElement => {
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();
@@ -9,9 +11,8 @@ export function enableValidation () {
 }
 
 function setEventListeners (form) {
-    const inputList = Array.from(form.querySelectorAll('.pop-up__input'));
-    const submitBtn = form.querySelector('.pop-up__submit-btn');
-    // toggleBtnState(inputList, submitBtn);
+    const inputList = Array.from(form.querySelectorAll(validationSettings.inputSelector));
+    const submitBtn = form.querySelector(validationSettings.submitBtnSelector);
     inputList.forEach(input => {
         input.addEventListener('input', ()=> {
             checkInputValidity(form, input);
@@ -21,10 +22,10 @@ function setEventListeners (form) {
 }
 function toggleBtnState (inputList, submitBtn) {
     if(hasInvalidInput(inputList)) {
-        submitBtn.classList.add('pop-up__submit-btn_inactive');
+        submitBtn.classList.add(validationSettings.inactiveBtnClass);
         submitBtn.setAttribute('disabled', '');
     } else {
-        submitBtn.classList.remove('pop-up__submit-btn_inactive');
+        submitBtn.classList.remove(validationSettings.inactiveBtnClass);
         submitBtn.removeAttribute('disabled');
     }
 }
@@ -40,15 +41,15 @@ function checkInputValidity(form, input) {
 
 function showInputError(form, input, errorMessage) {
     const errorElement = form.querySelector(`.pop-up__input-error_place_${input.id}`);
-    input.classList.add('pop-up__input_invalid');
+    input.classList.add(validationSettings.inputErrorClass);
    errorElement.textContent = errorMessage;
-    errorElement.classList.add('pop-up__input-error_active');
+    errorElement.classList.add(validationSettings.errorClass);
 }
 
 function hideInputError(form, input) {
     const errorElement = form.querySelector(`.pop-up__input-error_place_${input.id}`);
-    input.classList.remove('pop-up__input_invalid');
-    errorElement.classList.remove('pop-up__input-error_active');
+    input.classList.remove(validationSettings.inputErrorClass);
+    errorElement.classList.remove(validationSettings.errorClass);
 }
 
 function hasInvalidInput (inputList){
