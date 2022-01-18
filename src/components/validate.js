@@ -1,7 +1,7 @@
 import {validationSettings} from "./data.js";
 
-export function enableValidation (validationSettings) {
-    const formList = Array.from(document.querySelectorAll(validationSettings.formSelector))	;
+export function enableValidation (settings) {
+    const formList = Array.from(document.querySelectorAll(settings.formSelector))	;
     formList.forEach(formElement => {
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();
