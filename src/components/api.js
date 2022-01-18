@@ -1,5 +1,5 @@
 import {userName, userTitle, userAvatar} from "./data.js";
-import {createNewCard, renderCard} from "./card.js";
+import {createNewCard, renderCard, renderLikesNumber} from "./card.js";
 import {updatePlaceholders} from "./popupHandler.js";
 
 const userId = "858504df48f716761af4b7e4"
@@ -48,14 +48,11 @@ export function renderInitialCards() {
         .then (cards => {
             console.log(cards);
             cards.forEach(card => {
-                console.log(card)
-                let likes = card.likes.length-1;
-                if(likes < 0) likes = 0;
                 if(card.owner._id.startsWith(userId)){
-                    const newCardEl = createNewCard(card.name, card.link, likes, true, card._id);
+                    const newCardEl = createNewCard(card.name, card.link, card.likes.length, true, card._id);
                     renderCard(newCardEl, true);
                 } else {
-                        const newCardEl = createNewCard(card.name, card.link, likes);
+                        const newCardEl = createNewCard(card.name, card.link, card.likes.length, false, card._id);
                     renderCard(newCardEl, true);
                 }
 
@@ -73,11 +70,47 @@ export function updateCards(cardName, cardLink){
             link: cardLink
         })
     })
+        .then(res => res.json())
+        .then(card => {
+            const newCardEl = createNewCard(cardName, cardLink, card.likes.length, true, card._id);
+            renderCard(newCardEl, false);
+        })
 }
 
 export function deleteCardFromServer(cardId) {
+    console.log(cardId)
     fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
         headers: config.headers
+    })
+}
+
+export function addLike(likes, cardId, card){
+    console.log(card)
+    fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: config.headers
+    })
+        .then(res => res.json())
+        .then(data => renderLikesNumber(card, data.likes.length));
+}
+
+export function removeLike(likes, cardId, card){
+    fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: config.headers
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(card)
+            renderLikesNumber(card, data.likes.length)
+        });
+}
+
+export function updateAvatar(link){
+    fetch(`${config.baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({avatar:link})
     })
 }

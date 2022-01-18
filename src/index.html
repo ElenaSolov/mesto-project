@@ -65,9 +65,9 @@
       </div>
     </div>
     <div class="pop-up pop-up_type_confirm">
-      <div class="pop-up__container pop-up__container_place_confirmation">
-        <button class="pop-up__close pop-up__close_place_confirm" type="button"></button>
-          <h3 class="pop-up__header pop-up__header_place_confirmation">Вы уверены?</h3>
+      <div class="pop-up__container pop-up__container_place_noform">
+        <button class="pop-up__close pop-up__close_place_confirmation" type="button"></button>
+          <h3 class="pop-up__header pop-up__header_place_noform">Вы уверены?</h3>
           <button type="button" class="pop-up__submit-btn pop-up__submit-btn_place_confirmation">Да</button>
       </div>
     </div>
@@ -78,6 +78,17 @@
           <img src="#" alt="" class="pop-up__img">
           <figcaption class="pop-up__caption"></figcaption>
         </figure>
+      </div>
+    </div>
+    <div class="pop-up pop-up_type_avatar">
+      <div class="pop-up__container">
+        <button class="pop-up__close pop-up__close_place_add" type="button"></button>
+        <form name="avatar" action="#" class="pop-up__form pop-up__form_place_avatar">
+          <h3 class="pop-up__header pop-up__header_place_noform">Обновить аватар</h3>
+          <input class="pop-up__input" type="url" id="avatar-url" name="avatar-url" placeholder="Ссылка на картинку" required>
+          <span class="pop-up__input-error pop-up__input-error_place_avatar-url">Введите адрес сайта.</span>
+          <button type="submit" class="pop-up__submit-btn pop-up__submit-btn_place_avatar">Сохранить</button>
+        </form>
       </div>
     </div>
     <template id="card-template">

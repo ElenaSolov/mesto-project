@@ -1,6 +1,17 @@
 import {openPopup, closePopup} from './popupHandler.js';
-import {deleteCardHandler} from './card.js';
-import {popupEdit, popupAdd, popupImgView, page, deleteConfirmationPopup} from './data.js';
+import {likesHandler} from './card.js';
+import {
+    popupEdit,
+    popupAdd,
+    page,
+    deleteConfirmationPopup,
+    avatarPopup,
+    profileEditForm,
+    profileAddForm
+} from './data.js';
+import {editFormHandler} from "./editProfile.js";
+import {addFormHandler} from "./addNewPlace.js";
+import {changeAvatar} from "./changeAvatar.js";
 
 
 export function windowClickHandler (evt) {
@@ -14,10 +25,8 @@ export function windowClickHandler (evt) {
         closePopup(evt.target);
     } else if (evt.target.classList.contains('element__delete')) {
         openPopup(deleteConfirmationPopup);
-    } else if (evt.target.classList.contains('pop-up__submit-btn_place_confirmation')) {
-
-    } else if (evt.target.classList.contains('element__like')) {
-        evt.target.classList.toggle('element__like_active');
+    } else if(evt.target.classList.contains('profile__avatar-container')){
+        openPopup(avatarPopup);
     }
 }
 
@@ -27,3 +36,4 @@ export function keyPressHandler (evt) {
         if (popUpEl) closePopup(popUpEl);
     }
 }
+

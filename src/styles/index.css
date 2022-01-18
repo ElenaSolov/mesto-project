@@ -47,10 +47,10 @@
 @import url(../blocks/pop-up/__input/pop-up__input.css);
 @import url(../blocks/pop-up/__input/_invalid/pop-up__input_invalid.css);
 @import url(../blocks/pop-up/__header/pop-up__header.css);
-@import url(../blocks/pop-up/__header/_place/pop-up__header_place_confirmation.css);
+@import url(../blocks/pop-up/__header/_place/pop-up__header_place_noform.css);
 @import url(../blocks/pop-up/__submit-btn/pop-up__submit-btn.css);
 @import url(../blocks/pop-up/__container/_place/pop-up__container_place_img.css);
-@import url(../blocks/pop-up/__container/_place/pop-up__container_place_confirmation.css);
+@import url(../blocks/pop-up/__container/_place/pop-up__container_place_noform.css);
 @import url(../blocks/pop-up/_type/pop-up_type_img.css);
 @import url(../blocks/pop-up/__img/pop-up__img.css);
 @import url(../blocks/pop-up/__figure/pop-up__figure.css);

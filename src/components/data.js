@@ -23,6 +23,11 @@ export const fullScreenImgCapture = popupImgView.querySelector('.pop-up__caption
 export const deleteConfirmationPopup = page.querySelector('.pop-up_type_confirm');
 export const deleteConfirmationBtn = deleteConfirmationPopup.querySelector('.pop-up__submit-btn_place_confirmation');
 
+export const avatarPopup = page.querySelector('.pop-up_type_avatar');
+export const avatarForm = avatarPopup.querySelector('.pop-up__form_place_avatar');
+export const avatarInput = avatarForm.querySelector('#avatar-url');
+export const avatarPicture = page.querySelector('.profile__avatar');
+
 export const validationSettings = {
     formSelector: '.pop-up__form',
     inputSelector: '.pop-up__input',

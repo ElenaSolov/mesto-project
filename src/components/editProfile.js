@@ -9,8 +9,6 @@ export function editFormHandler(evt) {
     updateUserInfo(userNameVal, userDescVal);
     updateProfileData(userNameVal, userDescVal);
     updatePlaceholders(userNameVal, userDescVal, userNameInput, userDescInput);
-    console.log(evt.target);
-
     closePopup(popupEdit);
 }
 
