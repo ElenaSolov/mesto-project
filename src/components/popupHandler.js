@@ -6,7 +6,7 @@ import {
     userDescInput
 } from './data.js';
 import {lockScrollY, unlockScrollY} from './scrollControl.js'
-import {deleteCardHandler} from "./card";
+import {enableDeleteBtn} from "./card";
 
 export function openPopup(el) {
     el.classList.add('pop-up_opened');
@@ -31,4 +31,15 @@ export function renderPicture(name, link) {
     fullScreenImg.src = link;
     fullScreenImg.alt = name;
     fullScreenImgCapture.textContent = name;
+}
+
+//UX Show Form Processing
+
+export function renderProcessing(isProcessing, popup){
+    const popupBtn = popup.querySelector('.pop-up__submit-btn');
+    if(isProcessing){
+        popupBtn.textContent = 'Сохранение';
+    } else {
+        popupBtn.textContent = 'Сохранить';
+    }
 }

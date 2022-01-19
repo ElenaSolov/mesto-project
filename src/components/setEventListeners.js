@@ -1,5 +1,5 @@
 import {openPopup, closePopup} from './popupHandler.js';
-import {likesHandler} from './card.js';
+import {deleteCardHandler, likesHandler} from './card.js';
 import {
     popupEdit,
     popupAdd,
@@ -7,12 +7,12 @@ import {
     deleteConfirmationPopup,
     avatarPopup,
     profileEditForm,
-    profileAddForm
+    profileAddForm, deleteConfirmationBtn
 } from './data.js';
 import {editFormHandler} from "./editProfile.js";
 import {addFormHandler} from "./addNewPlace.js";
 import {changeAvatar} from "./changeAvatar.js";
-
+import {enableDeleteBtn} from "./card.js";
 
 export function windowClickHandler (evt) {
     if (evt.target.classList.contains('profile__edit-btn')) {
@@ -25,6 +25,7 @@ export function windowClickHandler (evt) {
         closePopup(evt.target);
     } else if (evt.target.classList.contains('element__delete')) {
         openPopup(deleteConfirmationPopup);
+        enableDeleteBtn(evt.target.closest('.element'));
     } else if(evt.target.classList.contains('profile__avatar-container')){
         openPopup(avatarPopup);
     }

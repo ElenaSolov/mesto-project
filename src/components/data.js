@@ -36,3 +36,5 @@ export const validationSettings = {
     inputErrorClass: 'pop-up__input_invalid',
     errorClass: 'pop-up__input-error_active'
 }
+
+export let currentCards = [];

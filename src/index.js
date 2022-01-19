@@ -15,6 +15,7 @@ getUserData();
 // RENDER INITIAL CARDS
 renderInitialCards();
 
+
  // FORM VALIDATION
 enableValidation(validationSettings);
 

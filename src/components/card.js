@@ -1,11 +1,10 @@
-import {page, newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn} from './data.js';
+import {page, newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn, currentCards} from './data.js';
 import {closePopup, renderPicture} from './popupHandler.js'
 import {addLike, deleteCardFromServer, removeLike} from "./api.js";
 
 const cardsList = page.querySelector('.elements__list');
 
 export function createNewCard(name, link, likes, deletable = false, cardId) {
-    console.log(cardId)
     const newCard = newCardTemplate.querySelector('.element').cloneNode(true);
     const cardImg = newCard.querySelector('.element__img');
     cardImg.src = link;
@@ -16,7 +15,6 @@ export function createNewCard(name, link, likes, deletable = false, cardId) {
     if(deletable) {
         const deleteBtn = newCard.querySelector('.element__delete');
         deleteBtn.classList.add('element__delete_active');
-        deleteConfirmationBtn.addEventListener('click', ()=> deleteCardHandler(newCard, cardId));
     }
     const likeBtn = newCard.querySelector('.element__like');
     likeBtn.addEventListener('click', ()=> likesHandler(likeBtn, likes, newCard, cardId));
@@ -32,13 +30,29 @@ export function renderCard(cardEl, append) {
 }
 
 // Delete card
+export function enableDeleteBtn(card){
+    deleteConfirmationBtn.removeEventListener('click', deleteCardHandler);
+    const link = card.querySelector('.element__img').src;
+    const cardID = getCardId(currentCards, link);
+    deleteConfirmationBtn.addEventListener('click', ()=>deleteCardHandler(card, cardID) )
+}
 
-export function deleteCardHandler(targetCard, cardId) {
+function deleteCardHandler(targetCard, cardId) {
     targetCard.remove();
     deleteCardFromServer(cardId);
     closePopup(deleteConfirmationPopup);
 }
 
+function getCardId(cards, link){
+    let res;
+    for(let card of cards){
+        if(card.link === link){
+            res = card.id;
+            break;
+        }
+    }
+    return res;
+}
 //Likes handler
 
 function likesHandler(likeBtn, likes, card, cardId){

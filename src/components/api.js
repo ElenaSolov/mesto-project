@@ -1,4 +1,4 @@
-import {userName, userTitle, userAvatar} from "./data.js";
+import {userName, userTitle, userAvatar, currentCards} from "./data.js";
 import {createNewCard, renderCard, renderLikesNumber} from "./card.js";
 import {updatePlaceholders} from "./popupHandler.js";
 
@@ -12,105 +12,89 @@ const config = {
     }
 }
 
-export function getUserData () {
-    fetch(`${config.baseUrl}/users/me`, {
-        method: 'GET',
-        headers: config.headers
+function sendRequest (url, method, body, cb){
+    fetch(url, {
+        method: method,
+        headers: config.headers,
+        body: body
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            userName.textContent = data.name;
-            userTitle.textContent = data.about;
-            userAvatar.src = data.avatar;
-            updatePlaceholders(data.name, data.about);
+        .then(res => {
+            if(res.ok) {
+                return res.json();
+            }
+            Promise.reject(`Ошибка: ${res.status}`);
         })
+        .then((data)=> {
+            if(cb) cb(data)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+export function getUserData () {
+    const callback = data=> {console.log(data)
+        userName.textContent = data.name;
+        userTitle.textContent = data.about;
+        userAvatar.src = data.avatar;
+        updatePlaceholders(data.name, data.about)};
+    sendRequest(`${config.baseUrl}/users/me`, 'GET', null, callback)
 }
 
 export function updateUserInfo(newName, newTitle) {
-    const body = {
+    const body = JSON.stringify({
         name: newName,
         about: newTitle
-    };
-    fetch(`${config.baseUrl}/users/me`, {
-        method: 'PATCH',
-        headers: config.headers,
-        body: JSON.stringify(body)
-    })
+    });
+    sendRequest(`${config.baseUrl}/users/me`,'PATCH',body);
  }
 
 export function renderInitialCards() {
-    fetch(`${config.baseUrl}/cards`, {
-        method: 'GET',
-        headers: config.headers
-    })
-        .then (res => res.json())
-        .then (cards => {
-            console.log(cards);
-            cards.forEach(card => {
-                if(card.owner._id.startsWith(userId)){
-                    const newCardEl = createNewCard(card.name, card.link, card.likes.length, true, card._id);
-                    renderCard(newCardEl, true);
-                } else {
-                        const newCardEl = createNewCard(card.name, card.link, card.likes.length, false, card._id);
-                    renderCard(newCardEl, true);
-                }
-
+    const callback = (cards) =>  {
+        cards.forEach(card => {
+        currentCards.push({id:card._id, link:card.link});
+        console.log(currentCards);
+        if(card.owner._id.startsWith(userId)){
+            const newCardEl = createNewCard(card.name, card.link, card.likes.length, true, card._id);
+            renderCard(newCardEl, true);
+        } else {
+            const newCardEl = createNewCard(card.name, card.link, card.likes.length, false, card._id);
+            renderCard(newCardEl, true);
+        }
     });
-        });
+}
+    sendRequest(`${config.baseUrl}/cards`, 'GET', null, callback);
 }
 
 export function updateCards(cardName, cardLink){
-    console.log(cardName)
-    fetch(`${config.baseUrl}/cards`, {
-        method: 'POST',
-        headers: config.headers,
-        body: JSON.stringify({
-            name: cardName,
-            link: cardLink
-        })
-    })
-        .then(res => res.json())
-        .then(card => {
-            const newCardEl = createNewCard(cardName, cardLink, card.likes.length, true, card._id);
-            renderCard(newCardEl, false);
-        })
+    const callback = card => {
+        const newCardEl = createNewCard(cardName, cardLink, card.likes.length, true, card._id);
+        renderCard(newCardEl, false);
+    };
+    const body = JSON.stringify({
+        name: cardName,
+        link: cardLink
+    });
+    sendRequest(`${config.baseUrl}/cards`, 'POST', body, callback);
 }
 
 export function deleteCardFromServer(cardId) {
-    console.log(cardId)
-    fetch(`${config.baseUrl}/cards/${cardId}`, {
-        method: 'DELETE',
-        headers: config.headers
-    })
+    sendRequest(`${config.baseUrl}/cards/${cardId}`, 'DELETE');
 }
 
 export function addLike(likes, cardId, card){
-    console.log(card)
-    fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: 'PUT',
-        headers: config.headers
-    })
-        .then(res => res.json())
-        .then(data => renderLikesNumber(card, data.likes.length));
+    const callback = data => renderLikesNumber(card, data.likes.length);
+    sendRequest(`${config.baseUrl}/cards/likes/${cardId}`, 'PUT', null, callback);
 }
 
 export function removeLike(likes, cardId, card){
-    fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: 'DELETE',
-        headers: config.headers
-    })
-        .then(res => res.json())
-        .then(data => {
-            console.log(card)
-            renderLikesNumber(card, data.likes.length)
-        });
+    const callback = data => {
+        renderLikesNumber(card, data.likes.length)
+    };
+    sendRequest(`${config.baseUrl}/cards/likes/${cardId}`, 'DELETE', null, callback());
 }
 
 export function updateAvatar(link){
-    fetch(`${config.baseUrl}/users/me/avatar`, {
-        method: 'PATCH',
-        headers: config.headers,
-        body: JSON.stringify({avatar:link})
-    })
+    const body = JSON.stringify({avatar:link});
+    sendRequest(`${config.baseUrl}/users/me/avatar`, 'PATCH', body);
 }
