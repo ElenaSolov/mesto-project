@@ -1,4 +1,5 @@
 {
+  "homepage": "https://elenasolov.github.io/mesto-project",
   "name": "mesto-project",
   "version": "1.0.0",
   "description": "(\u0016интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.)",
