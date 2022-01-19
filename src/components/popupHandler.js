@@ -8,15 +8,17 @@ import {
 import {lockScrollY, unlockScrollY} from './scrollControl.js'
 import {enableDeleteBtn} from "./card";
 
-export function openPopup(el) {
+export function openPopup(el, card, id) {
     el.classList.add('pop-up_opened');
     lockScrollY();
+    if(card){
+        enableDeleteBtn(card, id);
+    }
 }
 
 export function closePopup(el) {
     el.classList.remove('pop-up_opened');
     unlockScrollY();
-
 }
 
 export function updatePlaceholders(name, title){

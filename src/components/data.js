@@ -1,6 +1,7 @@
 export const page = document.querySelector('.page');
 export const popupEdit = page.querySelector('.pop-up_type_edit-profile');
 
+export const cardsList = page.querySelector('.elements__list');
 
 export const profileEditForm = page.querySelector('.pop-up__form_place_edit');
 export const userNameInput = page.querySelector('#heading');
@@ -14,7 +15,6 @@ export const popupAdd = page.querySelector('.pop-up_type_add-card');
 export const newPlaceNameInput = page.querySelector('#place');
 export const newPlaceLinkInput = page.querySelector('#url');
 export const newCardTemplate = page.querySelector('#card-template').content;
-
 
 export const popupImgView = page.querySelector('.pop-up_type_img');
 export const fullScreenImg = popupImgView.querySelector('.pop-up__img');
@@ -37,4 +37,16 @@ export const validationSettings = {
     errorClass: 'pop-up__input-error_active'
 }
 
-export let currentCards = [];
+export const userId = "858504df48f716761af4b7e4";
+
+export const config = {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
+    headers: {
+        authorization: '791f7307-c481-4d9c-81d1-c554dbe0a5da',
+        'Content-Type': 'application/json'
+    }
+}
+
+export const deleteHandlers = [];
+
+

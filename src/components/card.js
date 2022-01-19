@@ -1,8 +1,6 @@
-import {page, newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn, currentCards} from './data.js';
-import {closePopup, renderPicture} from './popupHandler.js'
+import {newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn, cardsList, deleteHandlers, userId} from './data.js';
+import {closePopup, openPopup, renderPicture} from './popupHandler.js'
 import {addLike, deleteCardFromServer, removeLike} from "./api.js";
-
-const cardsList = page.querySelector('.elements__list');
 
 export function createNewCard(name, link, likes, deletable = false, cardId) {
     const newCard = newCardTemplate.querySelector('.element').cloneNode(true);
@@ -15,6 +13,9 @@ export function createNewCard(name, link, likes, deletable = false, cardId) {
     if(deletable) {
         const deleteBtn = newCard.querySelector('.element__delete');
         deleteBtn.classList.add('element__delete_active');
+        deleteBtn.addEventListener('click', ()=>{
+            openPopup(deleteConfirmationPopup, newCard, cardId);
+        })
     }
     const likeBtn = newCard.querySelector('.element__like');
     likeBtn.addEventListener('click', ()=> likesHandler(likeBtn, likes, newCard, cardId));
@@ -30,33 +31,30 @@ export function renderCard(cardEl, append) {
 }
 
 // Delete card
-export function enableDeleteBtn(card){
-    deleteConfirmationBtn.removeEventListener('click', deleteCardHandler);
-    const link = card.querySelector('.element__img').src;
-    const cardID = getCardId(currentCards, link);
-    deleteConfirmationBtn.addEventListener('click', ()=>deleteCardHandler(card, cardID) )
+export function enableDeleteBtn(targetCard, cardId){
+    clearEventListeners();
+    deleteConfirmationBtn.addEventListener('click', deleteCardHandler);
+    function deleteCardHandler(){
+        targetCard.remove();
+        deleteCardFromServer(cardId);
+        closePopup(deleteConfirmationPopup, deleteCardHandler);
+    }
+    deleteHandlers.push(deleteCardHandler);
 }
 
-function deleteCardHandler(targetCard, cardId) {
-    targetCard.remove();
-    deleteCardFromServer(cardId);
-    closePopup(deleteConfirmationPopup);
-}
-
-function getCardId(cards, link){
-    let res;
-    for(let card of cards){
-        if(card.link === link){
-            res = card.id;
-            break;
+function clearEventListeners() {
+    for (let handler of deleteHandlers) {
+        deleteConfirmationBtn.removeEventListener('click', handler);
+        const index = deleteHandlers.indexOf(handler);
+        if (index > -1) {
+            deleteHandlers.splice(index, 1);
         }
     }
-    return res;
 }
+
 //Likes handler
 
 function likesHandler(likeBtn, likes, card, cardId){
-    console.log(likes)
     if(!likeBtn.classList.contains('element__like_active')) {
         likeBtn.classList.add('element__like_active');
         likes++;
@@ -68,7 +66,14 @@ function likesHandler(likeBtn, likes, card, cardId){
     }
 }
 
+export function checkLikesActive(likes) {
+    for (let like of likes){
+        if (like._id === userId){
+            return true;
+        }
+    }
+    return false;
+}
 export function renderLikesNumber(card, likes) {
-    console.log(card)
     card.querySelector('.element__likes-number').textContent = likes;
 }
