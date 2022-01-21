@@ -1,8 +1,9 @@
-import {newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn, cardsList, deleteHandlers, userId} from './data.js';
+import {newCardTemplate, deleteConfirmationPopup, deleteConfirmationBtn, cardsList, deleteHandlers} from './data.js';
 import {closePopup, openPopup, renderPicture} from './popupHandler.js'
-import {addLike, deleteCardFromServer, removeLike} from "./api.js";
+import {addLike, deleteCardFromServer, getCard, removeLike, renderInitialCards} from "./api.js";
+import {myId} from "./index.js"
 
-export function createNewCard(name, link, likes, deletable = false, cardId) {
+export function createNewCard(name, link, likes, isLiked, deletable = false, cardId) {
     const newCard = newCardTemplate.querySelector('.element').cloneNode(true);
     const cardImg = newCard.querySelector('.element__img');
     cardImg.src = link;
@@ -10,15 +11,21 @@ export function createNewCard(name, link, likes, deletable = false, cardId) {
     cardImg.addEventListener('click', () => renderPicture(name, link));
     newCard.querySelector('.element__text').textContent = name.toString();
     renderLikesNumber(newCard, likes);
+
     if(deletable) {
         const deleteBtn = newCard.querySelector('.element__delete');
         deleteBtn.classList.add('element__delete_active');
         deleteBtn.addEventListener('click', ()=>{
-            openPopup(deleteConfirmationPopup, newCard, cardId);
+            openPopup(deleteConfirmationPopup);
+            enableDeleteBtn(newCard, cardId)
         })
     }
     const likeBtn = newCard.querySelector('.element__like');
-    likeBtn.addEventListener('click', ()=> likesHandler(likeBtn, likes, newCard, cardId));
+
+    if(isLiked){
+        likeBtn.classList.add('element__like_active');
+    }
+    likeBtn.addEventListener('click', ()=> handleLikes(likeBtn, newCard, cardId));
     return newCard;
 }
 
@@ -35,11 +42,16 @@ export function enableDeleteBtn(targetCard, cardId){
     clearEventListeners();
     deleteConfirmationBtn.addEventListener('click', deleteCardHandler);
     function deleteCardHandler(){
-        targetCard.remove();
-        deleteCardFromServer(cardId);
-        closePopup(deleteConfirmationPopup, deleteCardHandler);
+        deleteHandlers.push(deleteCardHandler);
+        deleteCardFromServer(cardId)
+            .then(()=>{
+              targetCard.remove();
+             })
+            .catch((err)=> console.log(err))
+            .finally(()=>closePopup(deleteConfirmationPopup, deleteCardHandler))
+
     }
-    deleteHandlers.push(deleteCardHandler);
+    ;
 }
 
 function clearEventListeners() {
@@ -54,26 +66,45 @@ function clearEventListeners() {
 
 //Likes handler
 
-function likesHandler(likeBtn, likes, card, cardId){
-    if(!likeBtn.classList.contains('element__like_active')) {
-        likeBtn.classList.add('element__like_active');
-        likes++;
-        addLike(likes, cardId, card);
-    } else {
-        likeBtn.classList.remove('element__like_active');
-        likes--;
-        removeLike(likes, cardId, card);
+function handleLikes(likeBtn, card, cardId){
+    let isLiked = false;
+    renderInitialCards().then(
+        cards => {
+            for (let card of cards) {
+                if (card._id === cardId) {
+                    isLiked = checkIsLiked(card);
+                }
+            }
+            if (!isLiked) {
+                addLike(cardId)
+                    .then((data) => {
+                        console.log(data)
+                        likeBtn.classList.add('element__like_active');
+                        renderLikesNumber(card, data.likes.length);
+                    })
+            } else {
+                removeLike(cardId)
+                    .then((data) => {
+                        likeBtn.classList.remove('element__like_active');
+                        renderLikesNumber(card, data.likes.length);
+                    })
+            }
+        }
+    );
     }
+
+
+export function renderLikesNumber(card, likes) {
+    card.querySelector('.element__likes-number').textContent = likes;
 }
 
-export function checkLikesActive(likes) {
-    for (let like of likes){
-        if (like._id === userId){
-            return true;
+export function checkIsLiked(card) {
+    if (card.likes.length > 0) {
+        for (let like of card.likes) {
+            if (like._id === myId) {
+                return true;
+            }
         }
     }
     return false;
-}
-export function renderLikesNumber(card, likes) {
-    card.querySelector('.element__likes-number').textContent = likes;
 }

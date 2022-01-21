@@ -1,5 +1,6 @@
 export const page = document.querySelector('.page');
 export const popupEdit = page.querySelector('.pop-up_type_edit-profile');
+export const profileEditBtn = page.querySelector('.profile__edit-btn');
 
 export const cardsList = page.querySelector('.elements__list');
 
@@ -15,6 +16,7 @@ export const popupAdd = page.querySelector('.pop-up_type_add-card');
 export const newPlaceNameInput = page.querySelector('#place');
 export const newPlaceLinkInput = page.querySelector('#url');
 export const newCardTemplate = page.querySelector('#card-template').content;
+export const profileAddBtn = page.querySelector('.profile__add-btn');
 
 export const popupImgView = page.querySelector('.pop-up_type_img');
 export const fullScreenImg = popupImgView.querySelector('.pop-up__img');
@@ -27,6 +29,7 @@ export const avatarPopup = page.querySelector('.pop-up_type_avatar');
 export const avatarForm = avatarPopup.querySelector('.pop-up__form_place_avatar');
 export const avatarInput = avatarForm.querySelector('#avatar-url');
 export const avatarPicture = page.querySelector('.profile__avatar');
+export const avatarEl = page.querySelector('.profile__avatar-container');
 
 export const validationSettings = {
     formSelector: '.pop-up__form',
@@ -36,8 +39,6 @@ export const validationSettings = {
     inputErrorClass: 'pop-up__input_invalid',
     errorClass: 'pop-up__input-error_active'
 }
-
-export const userId = "858504df48f716761af4b7e4";
 
 export const config = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
