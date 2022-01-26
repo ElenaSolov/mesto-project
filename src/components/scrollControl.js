@@ -5,13 +5,13 @@ import {page} from './data.js';
 let scrollY;
 
 export function lockScrollY() {
-    scrollY = window.scrollY;
-    page.classList.add('page__scroll-lock');
-    page.style.top = `-${scrollY}px`;
+  scrollY = window.scrollY;
+  page.classList.add('page__scroll-lock');
+  page.style.top = `-${scrollY}px`;
 }
 
 export function unlockScrollY() {
-    page.classList.remove('page__scroll-lock')
-    page.style.top = '';
-    window.scrollTo(0, scrollY);
+  page.classList.remove('page__scroll-lock')
+  page.style.top = '';
+  window.scrollTo(0, scrollY);
 }

@@ -31,20 +31,23 @@ export const avatarInput = avatarForm.querySelector('#avatar-url');
 export const avatarPicture = page.querySelector('.profile__avatar');
 export const avatarEl = page.querySelector('.profile__avatar-container');
 
+export const errorPopup = page.querySelector('.pop-up_type_error');
+export const errorPopupBtn = errorPopup.querySelector('.pop-up__submit-btn');
+
 export const validationSettings = {
-    formSelector: '.pop-up__form',
-    inputSelector: '.pop-up__input',
-    submitBtnSelector: '.pop-up__submit-btn',
-    inactiveBtnClass: 'pop-up__submit-btn_inactive',
-    inputErrorClass: 'pop-up__input_invalid',
-    errorClass: 'pop-up__input-error_active'
+  formSelector: '.pop-up__form',
+  inputSelector: '.pop-up__input',
+  submitBtnSelector: '.pop-up__submit-btn',
+  inactiveBtnClass: 'pop-up__submit-btn_inactive',
+  inputErrorClass: 'pop-up__input_invalid',
+  errorClass: 'pop-up__input-error_active'
 }
 
 export const config = {
-    baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
-    headers: {
-        authorization: '791f7307-c481-4d9c-81d1-c554dbe0a5da',
-        'Content-Type': 'application/json'
+  baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
+  headers: {
+    authorization: '791f7307-c481-4d9c-81d1-c554dbe0a5da',
+    'Content-Type': 'application/json'
     }
 }
 
