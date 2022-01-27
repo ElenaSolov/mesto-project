@@ -50,7 +50,6 @@ export function enableDeleteBtn(targetCard, cardId){
   deleteConfirmationBtn.addEventListener('click', deleteCardHandler);
   deleteHandlers.push(deleteCardHandler);
   function deleteCardHandler(){
-    
     deleteCardFromServer(cardId)
       .then(()=>{
         targetCard.remove();

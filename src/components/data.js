@@ -48,7 +48,7 @@ export const config = {
   headers: {
     authorization: '791f7307-c481-4d9c-81d1-c554dbe0a5da',
     'Content-Type': 'application/json'
-    }
+  }
 }
 
 export const deleteHandlers = [];

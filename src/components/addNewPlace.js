@@ -9,16 +9,16 @@ export function handleAddFormSubmit() {
     const newCardName = newPlaceNameInput.value;
     const newCardLink= newPlaceLinkInput.value;
     updateCards(newCardName, newCardLink)
-        .then(card=> {
+      .then(card=> {
         const newCardEl = createNewCard(card.name, card.link, card.likes.length, false, true, card._id);
         renderCard(newCardEl, false);
         profileAddForm.reset();
         disableSubmitBtn(profileAddForm.querySelector('.pop-up__submit-btn'), 'pop-up__submit-btn_inactive');
         closePopup(popupAdd);
         renderProcessing(false, profileAddForm);
-    })
-        .catch(err => {
+      })
+      .catch(err => {
             console.log(err);
             openPopup(errorPopup);
-        })
+      })
 }

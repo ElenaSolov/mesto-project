@@ -18,7 +18,7 @@ export function changeAvatar(){
       console.log(err);
       openPopup(errorPopup);
     })
-    }
+}
 
 function renderAvatar(link) {
   avatarPicture.src = link;
