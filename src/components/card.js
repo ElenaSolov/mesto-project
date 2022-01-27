@@ -81,11 +81,19 @@ function handleLikes(likeBtn, card, cardId){
         likeBtn.classList.add('element__like_active');
         renderLikesNumber(card, data.likes.length);
       })
+      .catch(err => {
+        console.log(err);
+        openPopup(errorPopup);
+      })
   } else {
     removeLike(cardId)
       .then(data => {
          likeBtn.classList.remove('element__like_active');
          renderLikesNumber(card, data.likes.length);
+      })
+      .catch(err => {
+        console.log(err);
+        openPopup(errorPopup);
       })
   }
 }
