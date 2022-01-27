@@ -48,8 +48,9 @@ export function renderCard(cardEl, append) {
 export function enableDeleteBtn(targetCard, cardId){
   clearEventListeners();
   deleteConfirmationBtn.addEventListener('click', deleteCardHandler);
+  deleteHandlers.push(deleteCardHandler);
   function deleteCardHandler(){
-    deleteHandlers.push(deleteCardHandler);
+    
     deleteCardFromServer(cardId)
       .then(()=>{
          targetCard.remove();
@@ -79,7 +80,6 @@ function handleLikes(likeBtn, card, cardId){
   if (!likeBtn.classList.contains('element__like_active')) {
     addLike(cardId)
       .then(data => {
-        console.log(data)
         likeBtn.classList.add('element__like_active');
         renderLikesNumber(card, data.likes.length);
       })
