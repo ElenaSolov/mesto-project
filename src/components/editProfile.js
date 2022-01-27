@@ -1,5 +1,5 @@
-import {userNameInput, userDescInput, popupEdit, userName, userTitle} from './data.js';
-import {closePopup, renderProcessing, updateEditFormValues} from './popupHandler.js';
+import {userNameInput, userDescInput, popupEdit, userName, userTitle, errorPopup} from './data.js';
+import {closePopup, openPopup, renderProcessing, updateEditFormValues} from './popupHandler.js';
 import {updateUserInfo} from './api.js'
 
 export function handleEditFormSubmit() {
@@ -10,16 +10,14 @@ export function handleEditFormSubmit() {
     .then(()=> {
       updateProfileData(userNameVal, userDescVal);
       updateEditFormValues(userNameVal, userDescVal);
+      closePopup(popupEdit);
+      renderProcessing(false, popupEdit);
     })
     .catch(err => {
-        closePopup(popupEdit);
+        openPopup(errorPopup);
         console.log(err);
     })
-    .finally(()=>{
-        closePopup(popupEdit);
-        renderProcessing(false, popupEdit);
-    })
-}
+ }
 
 function updateProfileData (newName, newTitle) {
   userName.textContent = newName;

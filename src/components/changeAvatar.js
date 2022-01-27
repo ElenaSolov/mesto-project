@@ -9,18 +9,16 @@ export function changeAvatar(){
   updateAvatar(newAvatarLink)
     .then(data=>{
       renderAvatar(data.avatar);
+      closePopup(avatarPopup);
+      avatarForm.reset();
+      renderProcessing(false, avatarPopup);
+      disableSubmitBtn(avatarPopup.querySelector('.pop-up__submit-btn'), 'pop-up__submit-btn_inactive');
     })
     .catch(err => {
       console.log(err);
       openPopup(errorPopup);
     })
-    .finally(()=> {
-      closePopup(avatarPopup);
-      avatarForm.reset();
-      disableSubmitBtn(avatarPopup.querySelector('.pop-up__submit-btn'), 'pop-up__submit-btn_inactive');
-      renderProcessing(false, avatarPopup)
-    })
-}
+    }
 
 function renderAvatar(link) {
   avatarPicture.src = link;

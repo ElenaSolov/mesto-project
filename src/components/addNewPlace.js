@@ -14,13 +14,11 @@ export function handleAddFormSubmit() {
         renderCard(newCardEl, false);
         profileAddForm.reset();
         disableSubmitBtn(profileAddForm.querySelector('.pop-up__submit-btn'), 'pop-up__submit-btn_inactive');
+        closePopup(popupAdd);
+        renderProcessing(false, profileAddForm);
     })
         .catch(err => {
             console.log(err);
             openPopup(errorPopup);
-        })
-        .finally(()=> {
-            closePopup(popupAdd);
-            renderProcessing(false, profileAddForm);
         })
 }

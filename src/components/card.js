@@ -53,14 +53,13 @@ export function enableDeleteBtn(targetCard, cardId){
     
     deleteCardFromServer(cardId)
       .then(()=>{
-         targetCard.remove();
+        targetCard.remove();
+        closePopup(deleteConfirmationPopup);
       })
       .catch(err => {
         console.log(err);
         openPopup(errorPopup);
       })
-      .finally(()=>closePopup(deleteConfirmationPopup, deleteCardHandler))
-
   }
 }
 
