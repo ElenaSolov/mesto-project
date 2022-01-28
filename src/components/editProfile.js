@@ -11,12 +11,12 @@ export function handleEditFormSubmit() {
       updateProfileData(userNameVal, userDescVal);
       updateEditFormValues(userNameVal, userDescVal);
       closePopup(popupEdit);
-      renderProcessing(false, popupEdit);
     })
     .catch(err => {
         openPopup(errorPopup);
         console.log(err);
     })
+    .finally(()=> renderProcessing(false, popupEdit))
  }
 
 function updateProfileData (newName, newTitle) {

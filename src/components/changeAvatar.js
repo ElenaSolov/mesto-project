@@ -1,4 +1,4 @@
-import {avatarPopup, avatarInput, avatarPicture, avatarForm, errorPopup} from "./data.js";
+import {avatarPopup, avatarInput, avatarPicture, avatarForm, errorPopup, popupEdit} from "./data.js";
 import {closePopup, openPopup, renderProcessing} from "./popupHandler.js";
 import {updateAvatar} from "./api.js";
 import {disableSubmitBtn} from "./validate.js";
@@ -18,6 +18,7 @@ export function changeAvatar(){
       console.log(err);
       openPopup(errorPopup);
     })
+    .finally(()=> renderProcessing(false, popupEdit))
 }
 
 function renderAvatar(link) {

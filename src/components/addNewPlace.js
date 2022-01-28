@@ -1,4 +1,4 @@
-import {newPlaceNameInput, newPlaceLinkInput, profileAddForm, popupAdd, errorPopup} from './data.js';
+import {newPlaceNameInput, newPlaceLinkInput, profileAddForm, popupAdd, errorPopup, popupEdit} from './data.js';
 import {closePopup, openPopup, renderProcessing} from './popupHandler.js';
 import {updateCards} from "./api.js";
 import {disableSubmitBtn} from "./validate.js";
@@ -21,4 +21,5 @@ export function handleAddFormSubmit() {
             console.log(err);
             openPopup(errorPopup);
       })
+      .finally(()=> renderProcessing(false, popupEdit))
 }
